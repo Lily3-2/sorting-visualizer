@@ -1,18 +1,15 @@
-
+/* Styling for the visuals container */
 .visuals {
-
   padding: 20px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
- 
-  
 }
 
 .visualizer {
   color: white;
-  margin-top: 90px;
+  margin-top: 90px; /* Adjust top margin */
   width: 100%;
   height: 100%;
   display: flex;
@@ -20,6 +17,7 @@
   justify-content: center;
   position: relative;
 }
+
 /*pivot legend*/
 .legend {
   position: absolute;
@@ -39,6 +37,7 @@
   font-weight: 500;
 }
 
+/* Styling for the pivot legend label */
 .legend__lable {
   height: 5px;
   width: 20px;
@@ -46,6 +45,7 @@
   margin-right: 3px;
 }
 
+/* Styling for the visual items container */
 .visual__items {
   display: flex;
   align-items: flex-end;
@@ -54,17 +54,19 @@
   margin-bottom: 40px;
   border-bottom: 1px solid white;
   position: relative;
-
 }
 
+/* Styling for each individual visual item */
 .visual__item {
   position: absolute;
 }
 
+/* Styling for the h4 element inside visual items */
 .visual__item > h4 {
   font-size: 0.4rem;
 }
 
+/* Styling for the buttons in the visuals section */
 .visual__btns > button {
   font-size: 20px;
   font-weight: 500;
@@ -95,13 +97,14 @@
   }
 }
 
-
+/* Media query for screens with max width 900px */
 @media only screen and (max-width: 900px) {
   .visuals {
     padding: 5px;
   }
 }
 
+/* Media query for screens with max width 600px */
 @media only screen and (max-width: 600px) {
   .visual__btns {
     display: flex;

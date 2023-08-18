@@ -4,12 +4,14 @@ import './Navbar.css';
 import { Slider } from '@mui/material';
 
 function Navbar() {
-
+   // Redux state and dispatcher
    const myState = useSelector(state => state.updateProps);
    const dispatch = useDispatch();
 
+    // State for max value of the Slider
    const [max,setMax] = useState(30);
 
+   // Handler for algorithm selection
    const handleAlgo = (algo) => {
       dispatch({
          type: 'UPDATE_ALGORITHM',
@@ -17,6 +19,7 @@ function Navbar() {
       })
    }
 
+   // Reset color handler
    const resetColor = () => {
       dispatch({
          type:'UPDATE_COLOR',
@@ -24,12 +27,14 @@ function Navbar() {
       })
    }
 
+   // Handler for range change
    const handleRange = (_range) => {
-
+      // Update UI element transitions
       let new_arr = [...myState.values];
       for(let i = 0; i < new_arr.length; i++)
          document.getElementById(i).style.transform = `translateX(${i*11}px)`;
 
+      // Reset color and dispatch range update
       resetColor();
       
       dispatch({
@@ -41,6 +46,7 @@ function Navbar() {
       })
    }
 
+   // Handler for color change
    const handleColor = (_color) => {
       dispatch({
          type: 'UPDATE_COLOR',
@@ -48,6 +54,7 @@ function Navbar() {
       })
    }
 
+   // Handler for speed change
    const handleSpeed = (_speed) => {
       dispatch({
          type: 'UPDATE_SPEED',
@@ -55,10 +62,12 @@ function Navbar() {
       })
    }
 
+   // Initialize range value on load
    useEffect(() => {
       handleRange(30);
    },[]);
 
+    // Update color on values change
    useEffect(() => {
       dispatch({
          type:'UPDATE_COLOR',
@@ -66,6 +75,7 @@ function Navbar() {
       })
    },[myState.values]);
 
+   // Adjust max value for responsive design
    const handleWidth = () => {
       if(window.innerWidth>1300)
          setMax(70);
@@ -83,16 +93,18 @@ function Navbar() {
          setMax(20);
    }
 
+   // Update max value on window resize
    useEffect(() => {
       handleWidth();
       window.addEventListener('resize',handleWidth);
       return () => window.removeEventListener('resize',handleWidth);
    },[]);
 
+   // Render the Navbar component
   return (
     <div className="wrapper">
       <nav className='navMenu'>
-
+         {/* Algorithm selection */}
          <div className="navbar__option">
             <label htmlFor="algo">Algorithm </label>
             <select name="algo" id="algo" onChange={(e) => handleAlgo(e.target.value)} disabled = {myState.play? true: false}>
@@ -104,6 +116,7 @@ function Navbar() {
             </select>
          </div>
 
+         {/* Size Slider */}
          <div className="navbar__option">
             <label htmlFor="range">Size </label>
             <Slider 
@@ -120,6 +133,7 @@ function Navbar() {
             />
          </div>
 
+         {/* Color selection */}
          <div className="navbar__option">
             <label htmlFor="color">Color </label>
             <select name="color" id="color" onChange = {(e) => handleColor(e.target.value)} disabled = {myState.play? true: false}>
@@ -131,6 +145,7 @@ function Navbar() {
             </select>
          </div>
 
+         {/* Speed selection */}
          <div className="navbar__option">
             <label htmlFor="speed">Speed </label>
             <select name="speed" defaultValue={100} id="speed" onChange = {(e) => handleSpeed(e.target.value)} disabled = {myState.play? true: false}>
@@ -144,5 +159,5 @@ function Navbar() {
    </div>
   )
 }
-
+// Export the Navbar component as the default export
 export default Navbar;

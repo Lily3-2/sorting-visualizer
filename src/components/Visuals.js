@@ -10,12 +10,14 @@ import './Visuals.css';
 
 
 function Visuals() {
-
+   // Accessing state and dispatch from Redux store
    const myState = useSelector(state => state.updateProps);
    const dispatch = useDispatch();
+   // Extracting color and range from state
    const color = myState.color;
    const range = myState.range;
 
+   // Function to reposition elements and update state for new array
    const changeValues = () => {
 
       let new_arr = [...myState.values];
@@ -27,6 +29,7 @@ function Visuals() {
       })
    }
 
+   // Function to handle play/pause button click
    const handlePlayPause = (play) => {
       if(!myState.play){
          document.getElementById('change-btn').disabled = true;
@@ -43,6 +46,7 @@ function Visuals() {
       })
    }
 
+   // Enable buttons when play/pause state changes
    useEffect(() => {
       if(!myState.play){
          document.getElementById('play-btn').disabled = false;
@@ -52,6 +56,7 @@ function Visuals() {
       }
    },[myState.play]);
 
+   // Adjust speed based on the selected algorithm
    let speed = myState.speed;
    if(myState.algorithm==='selection')
       speed *= 3;
@@ -59,17 +64,21 @@ function Visuals() {
       speed *= 5;
    else if(myState.algorithm==='quick')
       speed *= 6;
+
   return (
     <div className="visuals">
       <div className="visualizer">
+         {/* Display legend for Pivot elements for Quick Sort */}
          {myState.algorithm==='quick' && <div className="legend"><div className="legend__lable"></div> Pivot elements</div>}
          {
+            // Rendering visual items representing array elements
             <div className="visual__items" style={{width:`${myState.values.length*11}px`}}>
                {
                   myState.values.map((item) => {
                      
                      return <div className="visual__item" key={item[1]} id={item[1]} style={{transition:`${speed/1000}s linear all`, transform:`translateX(${item[1]*11}px)`}}>
                               <h4>{item[0]}</h4>
+                              {/* Visualization of array elements */}
                               <div className="visual" style={{height:`${item[0]*3}px`, backgroundColor:color, width:(range<35? '8px': '6px')}}></div>
                            </div>
                   })
@@ -78,10 +87,12 @@ function Visuals() {
          }
       </div>
       <div className="visual__btns">
-         <button id = 'change-btn' onClick = {changeValues}>New Array</button>   
-           <button id='play-btn' onClick={() => handlePlayPause(true)}>Sort</button>
+         {/* Button to generate a new array */}
+         <button id = 'change-btn' onClick = {changeValues}>New Array</button>
+         {/* Button to initiate sorting */}   
+         <button id='play-btn' onClick={() => handlePlayPause(true)}>Sort</button>
       </div>
-
+      {/* Rendering sorting algorithms */}
       <BubbleSort/>
       <InsertionSort />
       <MergeSort />
